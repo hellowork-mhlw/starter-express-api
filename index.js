@@ -7,7 +7,7 @@ const nodemailer = require("nodemailer");
 
 
 const app = express()
-app.all('/', (req, res) => {
+app.all('/', async (req, res) => {
 
 console.log(nodemailer)
 if (process.env.MAIL_HOST) {
@@ -22,13 +22,13 @@ if (process.env.MAIL_HOST) {
         },
       });
         // send mail with defined transport object
-  transporter.sendMail({
+  await transporter.sendMail({
     from: '"Fred Foo 👻" <'+process.env.MAIL_USER+'>', // sender address
     to: "osaka.niconico@gmail.com", // list of receivers
     subject: "Hello ✔", // Subject line
     text: "Hello world?", // plain text body
     html: "<b>Hello world?</b>", // html body
-  }).then(console.log);
+  }).then(console.log).catch(console.error);
 
 }
 
